@@ -17,17 +17,24 @@ class Doctor(models.Model):
     shift_start = fields.Float(string='Shift Start')
     shift_end = fields.Float(string='Shift End')
 
+
+    # shift_start and shift_end > widget
+    # FILL HERE
+
+
     # unique email constraint
     _sql_constraints = [
         ('email_unique', 'unique(email)', 'Email must be unique.')
     ]
 
-    # compute part
+    # compute full name
     @api.depends('first_name', 'last_name')
     def _compute_full_name(self):
         for rec in self:
             rec.full_name = f"{rec.first_name} {rec.last_name}"
 
+
+    # compute age
     @api.depends('date_of_birth')
     def _compute_age(self):
         from datetime import date
